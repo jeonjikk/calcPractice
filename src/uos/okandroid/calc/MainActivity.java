@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	TextView textview;
-	
+	Boolean isStarted = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,134 +17,55 @@ public class MainActivity extends Activity {
 		textview = (TextView) findViewById(R.id.textView1);
 		
 		Button button1 = (Button)findViewById(R.id.button1);
-		
-		button1.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"1");
-			}
-		});
 		Button button2 = (Button)findViewById(R.id.button2);
-		
-		button2.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"2");
-			}
-		});
 		Button button3 = (Button)findViewById(R.id.button3);
-		
-		button3.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"3");
-			}
-		});
 		Button button4 = (Button)findViewById(R.id.button4);
-		
-		button4.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"4");
-			}
-		});
 		Button button5 = (Button)findViewById(R.id.button5);
-		
-		button5.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"5");
-			}
-		});
 		Button button6 = (Button)findViewById(R.id.button6);
-		
-		button6.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"6");
-			}
-		});
 		Button button7 = (Button)findViewById(R.id.button7);
-		
-		button7.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"7");
-			}
-		});
 		Button button8 = (Button)findViewById(R.id.button8);
-		
-		button8.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"8");
-			}
-		});
 		Button button9 = (Button)findViewById(R.id.button9);
-		
-		button9.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"9");
-			}
-		});
 		Button button0 = (Button)findViewById(R.id.button0);
-		
-		button0.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				textview.setText(textview.getText()+"0");
-			}
-		});
-		Button button11 = (Button)findViewById(R.id.button11);
-		
-		button11.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				textview.setText(textview.getText()+"+");
-			}
-		});
-		Button button22 = (Button)findViewById(R.id.button22);
-		
-		button22.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				String nowStr = (String) textview.getText();
-				String[] nowArray = nowStr.split("\\+");
-				
-				int result = 0;
-				for (int i = 0; i < nowArray.length; i++)
-				{
-					result += Integer.parseInt(nowArray[i]);
-				}
-				textview.setText(textview.getText()+"="+String.valueOf(result));
-				
-			}
-		});
+		Button buttonplus = (Button)findViewById(R.id.button11);
+		Button buttonequal = (Button)findViewById(R.id.button22);
 		Button buttonClr = (Button)findViewById(R.id.buttonClr);
+		Button buttonDel = (Button)findViewById(R.id.buttonDel);
 		
+		View.OnClickListener listener = new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				checkMode();
+				String string = ((Button)v).getText().toString();
+				textview.setText(textview.getText() + string);
+			}
+		};
+		
+		button1.setOnClickListener(listener);
+		button2.setOnClickListener(listener);
+		button3.setOnClickListener(listener);
+		button4.setOnClickListener(listener);
+		button5.setOnClickListener(listener);
+		button6.setOnClickListener(listener);
+		button7.setOnClickListener(listener);
+		button8.setOnClickListener(listener);
+		button9.setOnClickListener(listener);
+		button0.setOnClickListener(listener);
+		buttonplus.setOnClickListener(listener);
+		
+		buttonequal.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				textview.setText(getResult());
+			}
+		});
 		buttonClr.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
+				isStarted = false;
 				textview.setText("");
 			}
 		});
-		Button buttonDel = (Button)findViewById(R.id.buttonDel);
 		
 		buttonDel.setOnClickListener(new View.OnClickListener() {
 			
@@ -155,6 +76,23 @@ public class MainActivity extends Activity {
 				textview.setText(newStr);
 			}
 		});
+	
+	}
+	protected CharSequence getResult() {
+		String text = textview.getText().toString();
+		String[] array = text.split("\\+");
+		int result = 0;
+		for (int i = 0; i < array.length; i++) {
+			result += Integer.parseInt(array[i]);
+		}
+		return String.valueOf(result);
+	}
+
+	public void checkMode() {
+		if (!isStarted) {
+			textview.setText("");
+			isStarted = true;
+		}
 	}
 
 	@Override
