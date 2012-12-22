@@ -127,14 +127,15 @@
             android:id="@+id/buttonClr"
             android:layout_width="80dp"
             android:layout_height="60dp"
+            android:background="@drawable/button_clear"
             android:text="Clr" />
 
         <Button
             android:id="@+id/buttonDel"
             android:layout_width="80dp"
             android:layout_height="60dp"
+            android:background="@drawable/button_delete"
             android:text="Del" />
-
         
     </LinearLayout>
 

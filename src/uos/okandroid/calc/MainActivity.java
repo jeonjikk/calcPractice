@@ -74,6 +74,7 @@ public class MainActivity extends Activity {
 				String nowStr = (String) textview.getText();
 				String newStr = nowStr.substring(0, nowStr.length()-1);
 				textview.setText(newStr);
+				isStarted = false;
 			}
 		});
 	
