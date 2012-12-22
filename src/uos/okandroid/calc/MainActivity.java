@@ -1,11 +1,13 @@
 package uos.okandroid.calc;
 
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	TextView textview;
@@ -50,7 +52,22 @@ public class MainActivity extends Activity {
 		button8.setOnClickListener(listener);
 		button9.setOnClickListener(listener);
 		button0.setOnClickListener(listener);
-		buttonplus.setOnClickListener(listener);
+		buttonplus.setOnClickListener(new View.OnClickListener() {
+			
+			@SuppressLint("ShowToast")
+			@Override
+			public void onClick(View v) {
+				//안되네요..
+				String str = (String) textview.getText();
+				String finalstr = str.substring(str.length()-1);
+				if ("+".equals(finalstr) )
+				{
+					Toast.makeText(getApplicationContext(), "no '+'!", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				textview.setText(textview.getText() + "+");
+			}
+		});
 		
 		buttonequal.setOnClickListener(new View.OnClickListener(){
 			@Override
@@ -62,6 +79,8 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				if(textview.getText() == "")
+					return;
 				isStarted = false;
 				textview.setText("");
 			}
@@ -71,6 +90,8 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				if(textview.getText() == "")
+					return;
 				String nowStr = (String) textview.getText();
 				String newStr = nowStr.substring(0, nowStr.length()-1);
 				textview.setText(newStr);
